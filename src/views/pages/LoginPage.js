@@ -20,9 +20,37 @@ import {
 import ExamplesNavbar from "components/Navbars/Navbar.js";
 import TransparentFooter from "components/Footers/TransparentFooter.js";
 
+// User Login info
+const database = [
+  {
+    username: "admin",
+    password: "admin",
+  },
+  {
+    username: "shady",
+    password: "shady",
+  },
+];
+
+const errors = {
+  invalid: "Invlaid username or password",
+  uname_empty: "Username cannot be empty",
+  pword_empty: "Password cannot be empty",
+};
+
 function LoginPage() {
   const [firstFocus, setFirstFocus] = React.useState(false);
   const [lastFocus, setLastFocus] = React.useState(false);
+
+  // state to store user input
+  const [userInput, setUserInput] = React.useState({
+    username: "",
+    password: "",
+  });
+
+  const [errorMessages, setErrorMessages] = React.useState("");
+  const [isSubmitted, setIsSubmitted] = React.useState(false);
+
   React.useEffect(() => {
     document.body.classList.add("login-page");
     document.body.classList.add("sidebar-collapse");
@@ -48,6 +76,53 @@ function LoginPage() {
       y.className = "fa fa-eye";
     }
   };
+
+  // Generate JSX code for error message
+  const renderErrorMessage = () => {
+    return (
+      errorMessages != "" &&
+      <div className="text-warning">
+        <i className="fa fa-exclamation-triangle"></i>
+        <span className="">{"   " + errorMessages}</span>
+      </div>
+    );
+  };
+
+  // function to handle submit
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    console.log(userInput.username);
+    console.log(userInput.password);
+
+    // Check if username or password is empty
+    if (userInput.username === "") {
+      setErrorMessages(errors.uname_empty);
+      return;
+    } else if (userInput.password === "") {
+      setErrorMessages(errors.pword_empt);
+      return;
+    }
+
+    // Find user login info
+    const userData = database.find(
+      (user) => user.username === userInput.username
+    );
+
+    // Compare user info
+    if (userData) {
+      if (userData.password !== userInput.password) {
+        // Invalid password
+        setErrorMessages(errors.invalid);
+      } else {
+        setIsSubmitted(true);
+        window.location.href = "/home";
+
+      }
+    } else {
+      // Username not found
+      setErrorMessages(errors.invalid);
+    }
+  };
   return (
     <>
       <ExamplesNavbar />
@@ -62,7 +137,7 @@ function LoginPage() {
           <Container>
             <Col className="ml-auto mr-auto" md="4">
               <Card className="card-login card-plain">
-                <Form action="" className="form" method="">
+                <Form onSubmit={handleSubmit} className="form" method="">
                   <CardHeader className="text-center">
                     <div className="logo-container">
                       <img
@@ -84,6 +159,14 @@ function LoginPage() {
                         </InputGroupText>
                       </InputGroupAddon>
                       <Input
+                        id="uname"
+                        value={userInput.username}
+                        onChange={(e) =>
+                          setUserInput({
+                            ...userInput,
+                            username: e.target.value,
+                          })
+                        }
                         placeholder="Username..."
                         type="text"
                         onFocus={() => setFirstFocus(true)}
@@ -103,6 +186,13 @@ function LoginPage() {
                       </InputGroupAddon>
                       <Input
                         id="password"
+                        value={userInput.password}
+                        onChange={(e) =>
+                          setUserInput({
+                            ...userInput,
+                            password: e.target.value,
+                          })
+                        }
                         placeholder="Password..."
                         type="text"
                         onFocus={() => setLastFocus(true)}
@@ -110,11 +200,15 @@ function LoginPage() {
                       ></Input>
                       {/* button to hide or unhide pasword */}
                       <InputGroupAddon addonType="append">
-                        <InputGroupText style={{paddingLeft:0,paddingRight:19}} onClick={() => togglePasswordHidden()}>
+                        <InputGroupText
+                          style={{ paddingLeft: 0, paddingRight: 19 }}
+                          onClick={() => togglePasswordHidden()}
+                        >
                           <i id="eye" className="fa fa-eye"></i>
                         </InputGroupText>
                       </InputGroupAddon>
                     </InputGroup>
+                    {renderErrorMessage()}
                   </CardBody>
                   <CardFooter className="text-center">
                     <Button
@@ -122,7 +216,8 @@ function LoginPage() {
                       className="btn-round"
                       color="info"
                       href="#pablo"
-                      onClick={(e) => e.preventDefault()}
+                      // inputMode="submit"
+                      onClick={handleSubmit}
                       size="lg"
                     >
                       Login
@@ -131,8 +226,8 @@ function LoginPage() {
                       <h6>
                         <a
                           className="link"
-                          href="#pablo"
-                          onClick={(e) => e.preventDefault()}
+                          href="/signup"
+                          // onClick={(e) => e.preventDefault()}
                         >
                           Create Account
                         </a>

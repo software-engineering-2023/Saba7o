@@ -12,13 +12,14 @@ import {
   NavItem,
   NavLink,
   Nav,
+  Badge,
   Container,
-  UncontrolledTooltip,
   Label,
+  UncontrolledTooltip,
   Button,
 } from "reactstrap";
 
-function ExamplesNavbar() {
+function ExamplesNavbar({login=true}) {
   const [navbarColor, setNavbarColor] = React.useState("navbar-transparent");
   const [collapseOpen, setCollapseOpen] = React.useState(false);
   React.useEffect(() => {
@@ -120,7 +121,7 @@ function ExamplesNavbar() {
             navbar
           >
             <Nav navbar>
-              <NavItem>
+              {/* <NavItem>
                 <NavLink to="/index" tag={Link}>
                   Back to Kit
                 </NavLink>
@@ -155,10 +156,10 @@ function ExamplesNavbar() {
                 <UncontrolledTooltip target="#facebook-tooltip">
                   Like us on Facebook
                 </UncontrolledTooltip>
-              </NavItem>
+              </NavItem> */}
               <NavItem>
                 <NavLink
-                  href="https://www.instagram.com/CreativeTimOfficial?ref=creativetim"
+                  href="https://github.com/software-engineering-2023/Saba7o"
                   target="_blank"
                   id="instagram-tooltip"
                 >
@@ -170,9 +171,11 @@ function ExamplesNavbar() {
                 </UncontrolledTooltip>
               </NavItem>
               <NavItem>
-                <Label to="/login" tag={Link}>
-                  Loginn
-                </Label>
+                <NavLink href="/login" style={{paddingLeft:0,paddingRight:0}}>
+                  <Badge color="info" className="mr-1" style={{fontSize:11, paddingLeft:12, paddingRight:12}}>
+                    {login? "Login": "Logout"}
+                  </Badge>
+                </NavLink>
               </NavItem>
             </Nav>
           </Collapse>
