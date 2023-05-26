@@ -20,7 +20,7 @@ import {
 
 // core components
 
-function FBasicElements() {
+function BasicElements() {
   const [leftFocus, setLeftFocus] = React.useState(false);
   const [rightFocus, setRightFocus] = React.useState(false);
   React.useEffect(() => {
