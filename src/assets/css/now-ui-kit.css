@@ -32,6 +32,13 @@
   padding: 0 !important;
 }
 
+/* Navy color, bold */
+.acc-card-header{
+  /* background-color: #2ca8ff !important; */
+  color: #5a5a5a !important;
+  font-weight: 600 !important;
+}
+
 .bootstrap-switch {
   display: inline-block;
   direction: ltr;
