@@ -39,6 +39,19 @@
   font-weight: 600 !important;
 }
 
+/* class for a navlink to make it have a hover effect which changes its background color from transparent to grey */
+/* not "active" */
+
+.left-nav:hover{
+  /* background-color: #d8e7f2 !important; */
+  background-color: #f4f4f4 !important;
+  background-color: #f1f6f8 !important;
+}
+
+.left-nav.active.nav-link:hover{
+  background-color: #212121 !important;
+}
+
 .bootstrap-switch {
   display: inline-block;
   direction: ltr;
