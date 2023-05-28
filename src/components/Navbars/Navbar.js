@@ -54,7 +54,7 @@ function ExamplesNavbar({login=true}) {
       ) : null}
       <Navbar className={"fixed-top " + navbarColor} color="info" expand="lg">
         <Container>
-          <UncontrolledDropdown className="button-dropdown">
+          {/* <UncontrolledDropdown className="button-dropdown">
             <DropdownToggle
               caret
               data-toggle="dropdown"
@@ -89,14 +89,14 @@ function ExamplesNavbar({login=true}) {
                 One more separated link
               </DropdownItem>
             </DropdownMenu>
-          </UncontrolledDropdown>
+          </UncontrolledDropdown> */}
           <div className="navbar-translate">
             <NavbarBrand
-              href="https://demos.creative-tim.com/now-ui-kit-react/index?ref=nukr-examples-navbar"
-              target="_blank"
+              href="/home"
+              // target="_blank"
               id="navbar-brand"
             >
-              Now Ui Kit
+              The Morning Bank 
             </NavbarBrand>
             <UncontrolledTooltip target="#navbar-brand">
               Designed by Invision. Coded by Creative Tim

@@ -24,6 +24,14 @@
  * Copyright 2012-2013 Mattia Larentis
  * http://www.apache.org/licenses/LICENSE-2.0
  */
+.no-margin{
+  margin: 0 !important;
+}
+
+.no-padding{
+  padding: 0 !important;
+}
+
 .bootstrap-switch {
   display: inline-block;
   direction: ltr;
