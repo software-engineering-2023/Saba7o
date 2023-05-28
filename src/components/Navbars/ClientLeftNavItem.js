@@ -9,14 +9,15 @@ import {
 
 function ClientLeftNavItem({ pill, pills, setPills, icon, text}) {
 
+    // hover effect on nav item to make it have a background color
     return <><NavItem style={{ width: "90%" }}>
     <NavLink
-      className={pills === pill ? "active" : ""}
-      href=""
+      className={"left-nav " + (pills === pill ? "active" : "")}
       onClick={(e) => {
         e.preventDefault();
         setPills(pill);
       }}
+
     >
       <Row style={{ paddingLeft: 10 }}>
         <i style={{paddingTop:3}} className={icon}></i>

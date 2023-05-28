@@ -15,12 +15,12 @@ import CardField from "./CardField";
 //     return "EGP " + num.toFixed(2);
 // }
 
-let egp = new Intl.NumberFormat("en-US", {
+export let egp = new Intl.NumberFormat("en-US", {
   style: "currency",
   currency: "EGP",
 });
 
-function AccountCard({ account }) {
+function AccountCard({ account, setSelectedAccount, noBtn=false }) {
   // a horizontal card that displays the account's number, balance, and type
   return (
     <Card
@@ -45,23 +45,28 @@ function AccountCard({ account }) {
             alignItems: "center",
           }}
         >
-          <Row>
+          <Row  style={{paddingLeft:noBtn ? 15 : 0}}>
+            {!noBtn && (
             <Button
               size="sm"
               color="info"
+              onClick={() => {setSelectedAccount(account)}}
               style={{
                 marginRight: 10,
                 marginLeft: 10,
                 marginTop: 0,
                 marginBottom: 0,
-                padding:12,
+                // padding:12,
+                paddingLeft: 15,
+                paddingRight: 15,
                 paddingTop: 10,
                 paddingBottom: 10,
+
                 borderRadius: 10,
               }}
             >
               <i
-                className="fa fa-chevron-down fa-2x"
+                className="fa fa-chevron-right fa-2x"
                 style={{
                   color: "#ffffff",
                   fontSize: 20,
@@ -71,7 +76,7 @@ function AccountCard({ account }) {
                   paddingRight: 0,
                 }}
               />
-            </Button>
+            </Button> )}
             {/* "Account number" */}
             <CardField title="Account number" value={account.accountNumber} />
           </Row>

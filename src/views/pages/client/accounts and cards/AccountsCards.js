@@ -4,11 +4,18 @@ import { useState } from "react";
 import { Card, CardBody, CardTitle, Row, Col, Button } from "reactstrap";
 import AccountCard from "./AccountCard";
 import CardCard from "./CardCard";
+import AccountTransactions from "./AccountTransactions";
+import CardTransactions from "./CardTransactions";
 
 function ClientAccountsCards({ accounts, cards }) {
-  return (
-    <>
-      <CardBody className="text-dark">
+  // state for which account is selected
+  const [selectedAccount, setSelectedAccount] = useState(null);
+  const [selectedCard, setSelectedCard] = useState(null);
+
+
+  function mainPage() {
+    return (
+      <>
         <Row>
           <Col>
             <CardTitle tag="h4" className="text-left" style={{ margin: 5 }}>
@@ -34,7 +41,7 @@ function ClientAccountsCards({ accounts, cards }) {
         </Row>
         {/* accounts */}
         {accounts.map((account) => (
-          <AccountCard account={account} />
+          <AccountCard account={account} setSelectedAccount={setSelectedAccount}/>
         ))}
 
         {/* 30 px space */}
@@ -58,7 +65,6 @@ function ClientAccountsCards({ accounts, cards }) {
                 paddingTop: 7,
                 paddingBottom: 7,
                 borderRadius: 10,
-
               }}
             >
               Add New
@@ -67,8 +73,22 @@ function ClientAccountsCards({ accounts, cards }) {
         </Row>
         {/* accounts */}
         {cards.map((card) => (
-          <CardCard card={card} />
+          <CardCard card={card} setSelectedCard={setSelectedCard} />
         ))}
+      </>
+    );
+  }
+
+  return (
+    <>
+      <CardBody className="text-dark">
+        {selectedAccount === null && selectedCard === null ? (
+          mainPage()
+        ) : selectedAccount !== null ? (
+          <AccountTransactions account={selectedAccount} back={() => {setSelectedAccount(null)}}/>
+        ) : (
+          <CardTransactions card={selectedCard} back={() => {setSelectedCard(null)}}/>
+        )}
       </CardBody>
     </>
   );
