@@ -39,6 +39,7 @@ import ClientDashboard from "./client/Dashboard";
 import ClientTransfer from "./client/Transfer";
 import ClientAccountsCards from "./client/accounts and cards/AccountsCards";
 import ClientLoans from "./client/loans/Loans";
+import PayBills from "./client/bills/PayBills";
 
 const initialAccounts = [
   {
@@ -194,6 +195,39 @@ const initialLoans = [
   },
 ];
 
+
+// gas/ water/ electricity/ telephone
+const initialBills= [
+  {
+    id: crypto.randomUUID(),
+    billNumber: "4567",
+    type: "Gas",
+    amount: 90,
+    dueDate: "2023-06-10",
+  },
+  {
+    id: crypto.randomUUID(),
+    billNumber: "3925",
+    type: "Water",
+    amount: 270,
+    dueDate: "2023-06-10",
+  },
+  {
+    id: crypto.randomUUID(),
+    billNumber: "9812",
+    type: "Electricity",
+    amount: 1200,
+    dueDate: "2023-06-10",
+  },
+  {
+    id: crypto.randomUUID(),
+    billNumber: "8456",
+    type: "Telephone",
+    amount: 60,
+    dueDate: "2023-06-10",
+  },
+]
+
 export default function ClientPage() {
   // const [login, setLogin] = useState(true);
   // const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -224,18 +258,30 @@ export default function ClientPage() {
     return JSON.parse(loans);
   });
 
+  const [bills, setBills] =  useState(() => {
+    const bills = localStorage.getItem("bills");
+    if (bills == null) {
+      return initialBills;
+    }
+
+    return JSON.parse(bills);
+  });
+
   useEffect(() => {
     localStorage.setItem("accounts", JSON.stringify(accounts));
     localStorage.setItem("cards", JSON.stringify(cards));
     localStorage.setItem("loans", JSON.stringify(loans));
     localStorage.setItem("pills", JSON.stringify(pills));
-  }, [accounts, cards, loans, pills]);
+    localStorage.setItem("bills", JSON.stringify(bills));
+
+  }, [accounts, cards, loans, pills, bills]);
 
   const tabs = {
     1: ClientDashboard(),
     2: ClientTransfer({ accounts, setAccounts }),
     4: ClientAccountsCards({ accounts, cards, setAccounts, setCards }),
     5: ClientLoans({ loans, setLoans }),
+    6: PayBills({bills, setBills})
   };
 
   function tabContent() {
@@ -244,8 +290,6 @@ export default function ClientPage() {
 
   return (
     <>
-      {/* <ExamplesNavbar login={false} /> */}
-      {/* clear-filter  */}
       <div style={{ display: "flex" }}>
         {/* a menu occupying the left 1/3 of the screen containing the following:*/}
         <ClientLeftNav pills={pills} setPills={setPills} />

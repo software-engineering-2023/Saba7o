@@ -1,14 +1,7 @@
 import { useState } from "react";
 
 // reactstrap components
-import {
-  Card,
-  CardBody,
-  CardTitle,
-  Row,
-  Col,
-  Button,
-} from "reactstrap";
+import { Card, CardBody, CardTitle, Row, Col, Button } from "reactstrap";
 import AccountCard from "./AccountCard";
 import CardCard from "./CardCard";
 import AccountTransactions from "./AccountTransactions";
@@ -78,9 +71,9 @@ function ClientAccountsCards({ accounts, cards, setAccounts, setCards }) {
           {/* button to add new account */}
           <Col>
             <Button
-            onClick={() => {
-              setCardModal(true);
-            }}
+              onClick={() => {
+                setCardModal(true);
+              }}
               color="info"
               style={{
                 float: "right",
@@ -106,8 +99,16 @@ function ClientAccountsCards({ accounts, cards, setAccounts, setCards }) {
 
   return (
     <>
-      <AddNewAccount modal={accModal} setModal={setAccModal} setAccounts={setAccounts} />
-      <AddNewCard modal={cardModal} setModal={setCardModal} setCards={setCards} />
+      <AddNewAccount
+        modal={accModal}
+        setModal={setAccModal}
+        setAccounts={setAccounts}
+      />
+      <AddNewCard
+        modal={cardModal}
+        setModal={setCardModal}
+        setCards={setCards}
+      />
       <CardBody className="text-dark">
         {selectedAccount === null && selectedCard === null ? (
           mainPage()
@@ -115,6 +116,10 @@ function ClientAccountsCards({ accounts, cards, setAccounts, setCards }) {
           <AccountTransactions
             account={selectedAccount}
             back={() => {
+              setSelectedAccount(null);
+            }}
+            deleteAccount={() => {
+              setAccounts(accounts.filter((acc) => acc !== selectedAccount));
               setSelectedAccount(null);
             }}
           />
@@ -134,8 +139,6 @@ function ClientAccountsCards({ accounts, cards, setAccounts, setCards }) {
       </CardBody>
     </>
   );
-
-  
 }
 
 export default ClientAccountsCards;

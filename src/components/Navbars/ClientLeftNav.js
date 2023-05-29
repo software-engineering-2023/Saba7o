@@ -83,6 +83,14 @@ function ClientLeftNav({ pills, setPills }) {
               icon="fa fa-piggy-bank"
               text="Loans"
             />
+            <ClientLeftNavItem
+              pill="6"
+              pills={pills}
+              setPills={setPills}
+              // icon="now-ui-icons business_money-coins"
+              icon="fa fa-money-bill"
+              text="Pay Bills"
+            />
           </Nav>
         </div>
 

@@ -22,7 +22,6 @@ function ClientLoans({ loans, setLoans }) {
     <>
       <ApplyForLoan modal={applyModal} setModal={setApplyModal} setLoans={setLoans} loans={loans} />
       <CardBody className="text-dark">
-        {/* back button */}
 
         <Row>
           <Col>

@@ -11,15 +11,19 @@ import {
   Button,
   ListGroup,
   ListGroupItem,
+  Modal,
+  ModalBody,
 } from "reactstrap";
 import AccountCard from "./AccountCard";
 import CardCard from "./CardCard";
 import CardField from "./CardField";
 import Transcation from "./Transaction";
 
-function AccountTransactions({ account, back }) {
+function AccountTransactions({ account, back , deleteAccount}) {
+  const [deleteModal, setDeleteModal] = useState(false);
   return (
     <>
+    {theDeleteModal()}
       <CardBody className="text-dark">
         {/* back button */}
 
@@ -58,9 +62,9 @@ function AccountTransactions({ account, back }) {
 
         {/* transactions */}
         <ListGroup flush>
-            <ListGroupItem>
-                <Transcation />
-            </ListGroupItem>
+          <ListGroupItem>
+            <Transcation />
+          </ListGroupItem>
           {/* map the account transactions */}
           {account.transactions.map((transaction) => (
             <ListGroupItem>
@@ -68,9 +72,106 @@ function AccountTransactions({ account, back }) {
             </ListGroupItem>
           ))}
         </ListGroup>
+
+        {/* 30 px space */}
+        <div style={{ height: 80 }}></div>
+
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          {/* red outlined delete account button in the middle  */}
+          <Button
+            outline
+            color="danger"
+            style={{
+              borderColor: "red",
+              fontSize: 17,
+              margin: 5,
+              padding: 13,
+              paddingTop: 10,
+              paddingBottom: 10,
+              borderRadius: 10,
+            }}
+            onClick={() => {
+              setDeleteModal(true);
+            }}
+          >
+            <i className="fa fa-trash" style={{marginRight:5}}/>
+            {"Close Account"}
+          </Button>
+        </div>
       </CardBody>
     </>
   );
+
+  function theDeleteModal() {
+    return (
+      <Modal
+        modalClassName="modal-mini modal-danger"
+        toggle={() => setDeleteModal(false)}
+        // onClosed={() => setAlert("")}
+        isOpen={deleteModal}
+      >
+        <div>
+          <Button
+            className="btn-neutral"
+            color="link"
+            type="button"
+            onClick={() => setDeleteModal(false)}
+            style={{
+              paddingTop: 0,
+              paddingBottom: 0,
+              float: "right",
+              fontSize: 17,
+            }}
+          >
+            <i className="now-ui-icons ui-1_simple-remove"></i>
+          </Button>
+        </div>
+        <div className="modal-header justify-content-center">
+          <div className="modal-profile">
+            <i
+              className="fa fa-trash"
+              style={{ color: "red" }}
+            ></i>
+          </div>
+        </div>
+        <ModalBody>
+          <p>Are you sure you want to delete this account?<br/>This action is <b>NOT</b> reversible!</p>
+        </ModalBody>
+
+        {/* two actions: cancel and delete */}
+        <div className="modal-footer">
+          <Button
+            className="btn-neutral"
+            color="link"
+            type="button"
+            onClick={() => setDeleteModal(false)}
+          >
+            Cancel
+          </Button>
+          <Button
+            className="btn-neutral"
+            color="link"
+            type="button"
+            onClick={() => {
+              setDeleteModal(false);
+              // delete the account
+              deleteAccount(account);
+              // setAlert("Account deleted successfully");
+            }}
+          >
+            Delete
+          </Button>
+        </div>
+      </Modal>
+    );
+  }
+
 }
 
 export default AccountTransactions;
