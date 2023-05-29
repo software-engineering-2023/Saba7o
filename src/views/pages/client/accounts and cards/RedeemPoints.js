@@ -326,7 +326,7 @@ function RedeemPoints({
     resetForm();
 
     // show a success message
-    alertUser("Credit card created successfully!");
+    alertUser("Redeemed Credit Card Points Successfully!");
   }
 
   function resetForm() {
