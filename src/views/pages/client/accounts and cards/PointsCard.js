@@ -19,7 +19,7 @@ function formatPts(num) {
   return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
-function PointsCard({ points }) {
+function PointsCard({ points, setRedeemModal }) {
   // state to show and hide card number
   //   const [showCardNum, setShowCardNum] = useState(false);
 
@@ -99,6 +99,9 @@ function PointsCard({ points }) {
               fontWeight: 600,
               fontSize: 12,
                 marginLeft: "auto",
+            }}
+            onClick={() => {
+                setRedeemModal(true);
             }}
           >
             {/* present icon */}

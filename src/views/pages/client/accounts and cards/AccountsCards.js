@@ -124,6 +124,11 @@ function ClientAccountsCards({ accounts, cards, setAccounts, setCards }) {
             back={() => {
               setSelectedCard(null);
             }}
+            setAccounts={setAccounts}
+            setCards={setCards}
+            accounts={accounts}
+            cards={cards}
+            selectedCard={selectedCard}
           />
         )}
       </CardBody>
