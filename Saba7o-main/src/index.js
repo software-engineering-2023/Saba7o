@@ -33,6 +33,7 @@ import SignupPage from "views/pages/SignupPage.js";
 import LandingPage from "views/pages/LandingPage";
 import ProfilePage from "views/examples/ProfilePage";
 import ClientPage from "views/pages/ClientPage";
+import BankerPage from "views/pages/Banker";
 
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
@@ -46,6 +47,7 @@ root.render(
       <Route path="/login" element={<LoginPage />} />
       <Route path="/signup" element={<SignupPage />} />
       <Route path="/client" element={<ClientPage />} />
+      <Route path="/banker" element={<BankerPage />} />
       
       <Route path="/nucleo-icons" element={<NucleoIcons />} />
       <Route path="/landing-page" element={<LandingPage />} />
