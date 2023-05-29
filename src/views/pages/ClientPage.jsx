@@ -38,6 +38,7 @@ import ClientLeftNav from "components/Navbars/ClientLeftNav";
 import ClientDashboard from "./client/Dashboard";
 import ClientTransfer from "./client/Transfer";
 import ClientAccountsCards from "./client/accounts and cards/AccountsCards";
+import ClientLoans from "./client/loans/Loans";
 
 const initialAccounts = [
   {
@@ -161,19 +162,48 @@ const initialCards = [
       },
     ],
   },
-  
+];
+
+const initialLoans = [
+  {
+    id: crypto.randomUUID(),
+    loanNumber: "1234567891018",
+    type: "Personal",
+    amount: 100000,
+    duration: 36,
+    status: "Active",
+    dueDate: "2023-06-10",
+  },
+  {
+    id: crypto.randomUUID(),
+    loanNumber: "987649746438",
+    type: "Car",
+    amount: 200000,
+    duration: 24,
+    status: "Pending",
+    dueDate: "",
+  },
+  {
+    id: crypto.randomUUID(),
+    loanNumber: "5678976543",
+    type: "Personal",
+    amount: 330000,
+    duration: 48,
+    status: "Rejected",
+    dueDate: "",
+  },
 ];
 
 export default function ClientPage() {
   // const [login, setLogin] = useState(true);
   // const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [pills, setPills] = useState("1");
+  const [pills, setPills] = useState(() => {
+    return JSON.parse(localStorage.getItem("pills")) || "1";
+  });
   const [accounts, setAccounts] = useState(() => {
     // clear localStorage
     // localStorage.clear();
-    return (
-      JSON.parse(localStorage.getItem("accounts")) || initialAccounts
-    );
+    return JSON.parse(localStorage.getItem("accounts")) || initialAccounts;
   });
 
   const [cards, setCards] = useState(() => {
@@ -185,16 +215,27 @@ export default function ClientPage() {
     return JSON.parse(cards);
   });
 
+  const [loans, setLoans] = useState(() => {
+    const loans = localStorage.getItem("loans");
+    if (loans == null) {
+      return initialLoans;
+    }
+
+    return JSON.parse(loans);
+  });
+
   useEffect(() => {
     localStorage.setItem("accounts", JSON.stringify(accounts));
     localStorage.setItem("cards", JSON.stringify(cards));
-  }, [accounts, cards]);
-
+    localStorage.setItem("loans", JSON.stringify(loans));
+    localStorage.setItem("pills", JSON.stringify(pills));
+  }, [accounts, cards, loans, pills]);
 
   const tabs = {
     1: ClientDashboard(),
-    2: ClientTransfer({accounts, setAccounts}),
-    4: ClientAccountsCards({ accounts, cards, setAccounts, setCards}),
+    2: ClientTransfer({ accounts, setAccounts }),
+    4: ClientAccountsCards({ accounts, cards, setAccounts, setCards }),
+    5: ClientLoans({ loans, setLoans }),
   };
 
   function tabContent() {
@@ -208,15 +249,6 @@ export default function ClientPage() {
       <div style={{ display: "flex" }}>
         {/* a menu occupying the left 1/3 of the screen containing the following:*/}
         <ClientLeftNav pills={pills} setPills={setPills} />
-
-        {/* vertical divider */}
-        {/* <div
-          style={{
-            borderLeft: "3px solid #e8e8e8",
-            // height: "100%",
-          }}
-        ></div> */}
-
         {/* a main section occupying the right 2/3 of the screen containing data for each of the sections above */}
         <Col
           style={{ flexGrow: 4, overflowY: "scroll", height: "100vh" }}

@@ -30,6 +30,7 @@ import { egp } from "./accounts and cards/AccountCard";
 function ClientTransfer({ accounts, setAccounts }) {
   const [alert, setAlert] = useState("");
   const [miniModal, setMiniModal] = useState(false);
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
 
   const [international, setInternational] = useState(false);
 
@@ -55,6 +56,7 @@ function ClientTransfer({ accounts, setAccounts }) {
   return (
     <>
       {alertModal()}
+      {successModal()}
       <Row
         style={{
           display: "flex",
@@ -641,7 +643,7 @@ function ClientTransfer({ accounts, setAccounts }) {
       })
     );
 
-    alertUser(
+    alertUserSuccess(
       "Transfer of EGP " +
         amountFinal +
         " to " +
@@ -653,17 +655,21 @@ function ClientTransfer({ accounts, setAccounts }) {
   }
 
   function alertUser(message) {
-    success = message.includes("successfully");
     setAlert(message);
     console.log(alert);
     setMiniModal(true);
   }
 
-  var success = false;
+  function alertUserSuccess(message) {
+    setAlert(message);
+    console.log(alert);
+    setShowSuccessModal(true);
+  }
+
   function alertModal() {
     return (
       <Modal
-        modalClassName={"modal-mini modal-" + success ? "success" : "warning"}
+        modalClassName={"modal-mini modal-warning"}
         toggle={() => setMiniModal(false)}
         onClosed={() => setAlert("")}
         isOpen={miniModal}
@@ -689,7 +695,47 @@ function ClientTransfer({ accounts, setAccounts }) {
             <i
               // bell icon
               className="now-ui-icons ui-1_bell-53"
-              style={{ color: success ? "green" : "#ffb236" }}
+              style={{ color: "#ffb236" }}
+            ></i>
+          </div>
+        </div>
+        <ModalBody>
+          <p>{alert}</p>
+        </ModalBody>
+      </Modal>
+    );
+  }
+
+  function successModal() {
+    return (
+      <Modal
+        modalClassName={"modal-mini modal-success"}
+        toggle={() => setShowSuccessModal(false)}
+        onClosed={() => setAlert("")}
+        isOpen={showSuccessModal}
+      >
+        <div>
+          <Button
+            className="btn-neutral"
+            color="link"
+            type="button"
+            onClick={() => setShowSuccessModal(false)}
+            style={{
+              paddingTop: 0,
+              paddingBottom: 0,
+              float: "right",
+              fontSize: 17,
+            }}
+          >
+            <i className="now-ui-icons ui-1_simple-remove"></i>
+          </Button>
+        </div>
+        <div className="modal-header justify-content-center">
+          <div className="modal-profile">
+            <i
+              // bell icon
+              className="now-ui-icons ui-1_check"
+              style={{ color: "green" }}
             ></i>
           </div>
         </div>
