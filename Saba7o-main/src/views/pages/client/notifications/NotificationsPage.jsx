@@ -40,7 +40,7 @@ export default function NotificationsPage({ notifications, setNotifications }) {
               {/* map the account transactions */}
                 {notifications.map((notif) => (
                     <ListGroupItem>
-                        <NotifCard notif={notif} />
+                        <NotifCard notif={notif} deleteNotif={deleteNotif}/>
                     </ListGroupItem>
                 ))}
             </ListGroup>
@@ -51,6 +51,12 @@ export default function NotificationsPage({ notifications, setNotifications }) {
       </CardBody>
     </>
   );
+
+    function deleteNotif(notif) {
+        console.log("notif", notif);
+        const newNotifs = notifications.filter((n) => n.id !== notif.id);
+        setNotifications(newNotifs);
+    }
 
 
 }
