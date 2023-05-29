@@ -16,6 +16,7 @@ import ClientAccountsCards from "./client/accounts and cards/AccountsCards";
 import ClientLoans from "./client/loans/Loans";
 import PayBills from "./client/bills/PayBills";
 import NotificationsPage from "./client/notifications/NotificationsPage";
+import ClientReport from "./client/ClientReport";
 
 const initialAccounts = [
   {
@@ -299,7 +300,8 @@ export default function ClientPage() {;
     4: ClientAccountsCards({ accounts, cards, setAccounts, setCards }),
     5: ClientLoans({ loans, setLoans }),
     6: PayBills({bills, setBills, accounts, setAccounts, }),
-    7: NotificationsPage({notifications, setNotifications})
+    7: NotificationsPage({notifications, setNotifications}),
+    8: ClientReport()
   };
 
   function tabContent() {

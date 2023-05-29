@@ -91,6 +91,16 @@ function ClientLeftNav({ pills, setPills }) {
               icon="fa fa-bell"
               text="Notifications"
             />
+            <ClientLeftNavItem
+              pill="8"
+              pills={pills}
+              setPills={setPills}
+              // icon="now-ui-icons business_money-coins"
+              
+              // bell
+              icon="fa fa-flag"
+              text="Report a Problem"
+            />
           </Nav>
         </div>
 

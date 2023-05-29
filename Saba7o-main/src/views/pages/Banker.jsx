@@ -320,7 +320,7 @@ export default function BankerPage() {;
           style={{ flexGrow: 4, overflowY: "scroll", height: "100vh" }}
           className="no-margin no-padding"
         >
-        <h1 style={{ flexGrow: 1, textAlign: "center" }}>Banker Page</h1>
+        {/* <h2 style={{ flexGrow: 1, textAlign: "center" }}>Banker</h2> */}
           {tabContent()}
         </Col>
         {/* </Row> */}
