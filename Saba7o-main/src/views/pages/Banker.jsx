@@ -17,6 +17,7 @@ import ClientLoans from "./client/loans/Loans";
 import PayBills from "./client/bills/PayBills";
 import NotificationsPage from "./client/notifications/NotificationsPage";
 import BankerLeftNav from "components/Navbars/BankerLeftNav";
+import BankerLoans from "./banker/BankerLoans";
 
 const initialAccounts = [
   {
@@ -149,8 +150,8 @@ const initialLoans = [
     type: "Personal",
     amount: 100000,
     duration: 36,
-    status: "Active",
-    dueDate: "2023-06-10",
+    status: "Pending",
+    dueDate: "",
   },
   {
     id: crypto.randomUUID(),
@@ -167,7 +168,7 @@ const initialLoans = [
     type: "Personal",
     amount: 330000,
     duration: 48,
-    status: "Rejected",
+    status: "Pending",
     dueDate: "",
   },
 ];
@@ -298,7 +299,7 @@ export default function BankerPage() {;
     // 1: ClientDashboard(),
     // 2: ClientTransfer({ accounts, setAccounts }),
     // 4: ClientAccountsCards({ accounts, cards, setAccounts, setCards }),
-    5: ClientLoans({ loans, setLoans }),
+    5: BankerLoans({ loans, setLoans }),
     // 6: PayBills({bills, setBills, accounts, setAccounts, }),
     7: NotificationsPage({notifications, setNotifications})
   };
