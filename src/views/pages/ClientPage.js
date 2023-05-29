@@ -170,7 +170,7 @@ export default function ClientPage() {
   const [pills, setPills] = useState("1");
   const [accounts, setAccounts] = useState(() => {
     // clear localStorage
-    localStorage.clear();
+    // localStorage.clear();
     return (
       JSON.parse(localStorage.getItem("accounts")) || initialAccounts
     );

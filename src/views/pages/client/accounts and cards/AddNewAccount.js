@@ -36,13 +36,14 @@ function AddNewAccount({ modal, setModal, setAccounts }) {
       <Modal
         isOpen={modal}
         toggle={() => {
-          resetForm();
-          setModal(!modal);
-        }}
-        onClosed={() => {
             resetForm();
-            setModal(false);
+            if (!modal) setAlert("");
+            setModal(!modal);
           }}
+        onClosed={() => {
+          resetForm();
+          setModal(false);
+        }}
         className="modal-lg"
         modalClassName="bd-example-modal-lg"
         style={{ marginTop: 150 }}
@@ -129,8 +130,10 @@ function AddNewAccount({ modal, setModal, setAccounts }) {
               }}
             >
               <div className="text-left text-danger">
-                {alert === "" ? null :  <i className="now-ui-icons ui-1_bell-53"></i> }
-                {"     " +alert}
+                {alert === "" ? null : (
+                  <i className="now-ui-icons ui-1_bell-53"></i>
+                )}
+                {"     " + alert}
               </div>
               {/* add and cancel buttons on the right */}
               <div className="text-right">
@@ -176,10 +179,8 @@ function AddNewAccount({ modal, setModal, setAccounts }) {
     const account = {
       // random
       id: crypto.randomUUID(),
-      // generate a 16 digit number
-      accountNumber: Math.floor(
-        1000000000000000 + Math.random() * 9000000000000000
-      ),
+      // generate a 13 digit number
+      accountNumber: Math.floor(1000000000000 + Math.random() * 9000000000000),
       actual: 0,
       type: accTypeDisabled ? accountType : otherType,
       balance: 0,
@@ -200,7 +201,6 @@ function AddNewAccount({ modal, setModal, setAccounts }) {
     // reset the form
     setAccountType("");
     setOtherType("");
-    setAlert("");
     setAgreed(false);
   }
 
@@ -214,28 +214,36 @@ function AddNewAccount({ modal, setModal, setAccounts }) {
       <Modal
         modalClassName="modal-mini modal-success"
         toggle={() => setMiniModal(false)}
+        onClosed={() => setAlert("")}
         isOpen={miniModal}
       >
-        <div >
+        <div>
           <Button
             className="btn-neutral"
             color="link"
             type="button"
             onClick={() => setMiniModal(false)}
-            style={{paddingTop: 0, paddingBottom: 0, float: "right", fontSize: 17}}
+            style={{
+              paddingTop: 0,
+              paddingBottom: 0,
+              float: "right",
+              fontSize: 17,
+            }}
           >
             <i className="now-ui-icons ui-1_simple-remove"></i>
           </Button>
         </div>
         <div className="modal-header justify-content-center">
           <div className="modal-profile">
-            <i className="now-ui-icons ui-1_check" style={{color:"green"}}></i>
+            <i
+              className="now-ui-icons ui-1_check"
+              style={{ color: "green" }}
+            ></i>
           </div>
         </div>
         <ModalBody>
           <p>{alert}</p>
         </ModalBody>
-        
       </Modal>
     );
   }
