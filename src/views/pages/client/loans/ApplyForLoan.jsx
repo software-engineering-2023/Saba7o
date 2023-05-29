@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { egp } from "./AccountCard";
+import { egp } from "../accounts and cards/AccountCard";
 
 // reactstrap components
 import {
@@ -11,30 +11,26 @@ import {
   Input,
   Label,
   Row,
+  Col,
   Card,
   CardBody,
   Button,
+  InputGroup,
+  InputGroupAddon,
+  InputGroupText,
 } from "reactstrap";
 // import { min } from "moment";
 
-function ApplyForLoan({
-  modal,
-  setModal,
-  points,
-  setCards,
-  setAccounts,
-  accounts,
-  cards,
-  selectedCard,
-}) {
+function ApplyForLoan({ modal, setModal, loans, setLoans }) {
   // mini modal
   const [miniModal, setMiniModal] = useState(false);
   // alert
   const [alert, setAlert] = useState("");
 
   // states for the form
-  const [pointsInput, setPointsInput] = useState(points);
-  const [accountChosen, setAccountChosen] = useState("");
+  const [amountInput, setAmountInput] = useState(null);
+  const [durationInput, setDurationInput] = useState(null);
+  const [type, setType] = useState("");
   const [agreed, setAgreed] = useState(false);
 
   return (
@@ -67,69 +63,7 @@ function ApplyForLoan({
               justifyContent: "space-between",
             }}
           >
-            <b>Redeem Points</b>
-
-            {/* Points balance card */}
-            <Card
-              style={{
-                borderRadius: 10,
-                marginBottom: 0,
-                width: "fit-content",
-                background: "#1e1f26",
-                marginLeft: "auto",
-              }}
-              className="text-left"
-            >
-              <CardBody
-                style={{
-                  paddingTop: 5,
-                  paddingBottom: 0,
-                  // round edges
-                }}
-              >
-                {/* row spacing should be space between */}
-                <Row
-                  style={{
-                    padding: 5,
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                    flexDirection: "row",
-                  }}
-                >
-                  <div
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      flexDirection: "column",
-                    }}
-                  >
-                    <span
-                      style={{
-                        color: "#ffffff",
-                        fontSize: 13,
-                        lineHeight: 1.2,
-                      }}
-                    >
-                      Points Balance:
-                    </span>
-                    <span
-                      style={{
-                        color: "#b5f2e5",
-                        margin: 0,
-                        fontWeight: 500,
-                        fontSize: 20,
-                      }}
-                    >
-                      {formatPts(points)}
-                      <span style={{ color: "#ffffff", fontSize: 11 }}>
-                        {"  Points"}
-                      </span>
-                    </span>
-                  </div>
-                </Row>
-              </CardBody>
-            </Card>
+            <b>Apply for Loan</b>
           </CardTitle>
           <Form
             onSubmit={(e) => {
@@ -145,69 +79,89 @@ function ApplyForLoan({
                 alignItems: "center",
               }}
             >
-              <FormGroup className="col-md-5">
-                <label>Points to Redeem</label>
-                <Input
-                  defaultValue={points}
-                  value={pointsInput}
-                  onChange={(e) => {
-                    console.log(e.target.value);
-                    if (parseInt(e.target.value) > points) {
-                      setPointsInput(points);
-                      return;
-                    }
-                    setPointsInput(e.target.value);
-                  }}
-                  placeholder="Name"
-                  type="number"
-                ></Input>
+              <FormGroup className={"col-md-6 no-margin"}>
+                <label htmlFor="inputAddress">Loan Amount</label>
+                <InputGroup>
+                  (
+                  <InputGroupAddon addonType="prepend">
+                    <InputGroupText
+                      style={{ fontSize: 12, paddingTop: 5, paddingBottom: 5 }}
+                    >
+                      EGP
+                    </InputGroupText>
+                  </InputGroupAddon>
+                  )
+                  <Input
+                    placeholder="000.00"
+                    type="number"
+                    onChange={(e) => {
+                      setAmountInput(e.target.value);
+                    }}
+                  ></Input>
+                </InputGroup>
               </FormGroup>
-              {/* an arrow icon then an uneditable field to show to value of the points in */}
-              <i
-                className="now-ui-icons arrows-1_minimal-right"
-                style={{ paddingLeft: 20, paddingRight: 20, fontWeight: 700 }}
-              ></i>
-              <FormGroup className="col-md-5">
-                <label>Cashback in EGP</label>
+
+              <FormGroup className="col-md-6">
+                <label>Loan duration (in months)</label>
                 <Input
                   className="form-control-plaintext"
-                  placeholder="Name"
+                  placeholder="XX months"
                   type="number"
-                  value={parseFloat((pointsInput * 0.05).toFixed(2))}
-                  readOnly=""
-                  //   disabled
+                  value={durationInput}
+                  onChange={(e) => {
+                    setDurationInput(e.target.value);
+                  }}
                 ></Input>
               </FormGroup>
             </div>
-            {/* text that says that 100 points convert to 5 egp */}
-            <div className="text-left">
-              <p style={{ fontSize: 12, fontWeight: 600 }}>
-                <b>* 100 points = 5 EGP</b>
-              </p>
+
+            <div
+              className="form-row"
+              style={{
+                display: "flex",
+                alignItems: "center",
+              }}
+            >
+              <Col>
+                <label className="no-margin no-padding">
+                  Loan Type
+                  <br />
+                </label>
+                <Row style={{ marginLeft: 0 }}>
+                  <FormGroup check className="form-check-radio">
+                    <Label check>
+                      <Input
+                        defaultValue="Personal"
+                        id="inlineRadio1"
+                        name="inlineRadioOptions"
+                        type="radio"
+                        onChange={(e) => {
+                          setType(e.target.value);
+                        }}
+                      ></Input>
+                      Personal <span className="form-check-sign"></span>
+                    </Label>
+                  </FormGroup>
+                  <div style={{ width: 20 }}></div>
+                  <FormGroup check className="form-check-radio">
+                    <Label check>
+                      <Input
+                        defaultValue="Car"
+                        id="inlineRadio2"
+                        name="inlineRadioOptions"
+                        type="radio"
+                        onChange={(e) => {
+                          setType(e.target.value);
+                        }}
+                      ></Input>
+                      Car <span className="form-check-sign"></span>
+                    </Label>
+                  </FormGroup>
+                </Row>
+              </Col>
             </div>
 
-            <div className="form-row">
-              <FormGroup className="col-md-7">
-                <label htmlFor="inputAccType">Account for Cashback</label>
-                <Input
-                  id="inputAccType"
-                  type="select"
-                  onChange={(e) => {
-                    setAccountChosen(e.target.value);
-                  }}
-                >
-                  <option selected="">Choose...</option>
-                  {accounts.map((acc) => {
-                    return (
-                      <option value={acc.id}>{
-                        // account number, type, balance
-                        `${acc.accountNumber} - ${acc.type} - EGP ${acc.balance}`
-                      }</option>
-                    );
-                  })}
-                </Input>
-              </FormGroup>
-            </div>
+            <div style={{ height: 20 }}></div>
 
             <FormGroup>
               <FormGroup check>
@@ -220,7 +174,7 @@ function ApplyForLoan({
                     }}
                     valid={agreed ? "true" : "false"}
                   ></Input>
-                  I confirm the redemption of my points.
+                  I confirm the application of this loan.
                   <span className="form-check-sign">
                     <span className="check"></span>
                   </span>
@@ -258,7 +212,7 @@ function ApplyForLoan({
                   <b>Cancel</b>
                 </Button>
                 <Button color="info" type="submit">
-                  <b>Redeem</b>
+                  <b>Apply</b>
                 </Button>
               </div>
             </Row>
@@ -272,52 +226,47 @@ function ApplyForLoan({
     e.preventDefault();
     // get the form data
     // check that the user chose an account type
-    console.log(pointsInput);
-    console.log(accountChosen);
-    if (accountChosen === "" || accountChosen === "Choose...") {
-      setAlert("Please choose an account to redeem the cashback to");
+    console.log(amountInput);
+    console.log(type);
+
+    // check if the user entered a valid amount
+
+    if (amountInput == null || amountInput <= 0) {
+      setAlert("Please enter a valid amount");
+      return;
+    }
+
+    // check if the user entered a valid duration
+    if (durationInput == null || durationInput <= 0) {
+      setAlert("Please enter a valid duration.");
+      return;
+    }
+
+    // check if the user chose a loan type
+    if (type === "") {
+      setAlert("Please choose a loan type.");
       return;
     }
 
     // check if he agreed to the terms
     if (!agreed) {
-      setAlert("Please agree to the terms");
+      setAlert("Please agree to the terms.");
       return;
     }
 
-    // check if the user has enough points
-    if (pointsInput > points) {
-      setAlert("You don't have enough points");
-      return;
-    }
-    // deduct the points from the user's card, and add the cashback to the account, and make a transaction for the cashback in the account
-    // deduct the points from the user's card
-    setCards(
-      cards.map((card) => {
-        if (card.id === selectedCard.id) {
-          card.points -= pointsInput;
-        }
-        return card;
-      })
-    );
-
-    // add the cashback to the account
-    setAccounts(
-      accounts.map((acc) => {
-        if (acc.id === accountChosen) {
-          acc.balance += parseFloat((pointsInput * 0.05).toFixed(2));
-          acc.transactions.push({
-            id: crypto.randomUUID(),
-            // todays date in yyyy-mm-dd format
-            // for example: 2021-05-31
-            date: new Date().toISOString().slice(0, 10),
-            amount: parseFloat((pointsInput * 0.05).toFixed(2)),
-            description: "Redeemed "+ pointsInput +" Credit Card Points",
-          });
-        }
-        return acc;
-      })
-    );
+    setLoans([
+      ...loans,
+      {
+        id: crypto.randomUUID(),
+        // random 8 digit number
+        loanNumber: Math.floor(10000000 + Math.random() * 90000000),
+        amount: amountInput,
+        duration: durationInput,
+        type: type,
+        status: "Pending",
+        dueDate: "",
+      },
+    ]);
 
     // make a transaction for the cashback in the account
 
@@ -327,12 +276,12 @@ function ApplyForLoan({
     resetForm();
 
     // show a success message
-    alertUser("Redeemed Credit Card Points Successfully!");
+    alertUser("Your loan application was issued successfully! Please wait for approval.");
   }
 
   function resetForm() {
     // reset the form
-    setPointsInput(points);
+    setAmountInput(null);
     setAgreed(false);
   }
 

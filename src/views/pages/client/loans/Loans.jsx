@@ -13,13 +13,14 @@ import {
 } from "reactstrap";
 import ActiveLoan from "./ActiveLoan";
 import NonActiveLoan from "./NonActiveLoan";
+import ApplyForLoan from "./ApplyForLoan";
 
 function ClientLoans({ loans, setLoans }) {
-  const [redeemModal, setRedeemModal] = useState(false);
+  const [applyModal, setApplyModal] = useState(false);
 
   return (
     <>
-
+      <ApplyForLoan modal={applyModal} setModal={setApplyModal} setLoans={setLoans} loans={loans} />
       <CardBody className="text-dark">
         {/* back button */}
 
@@ -31,7 +32,7 @@ function ClientLoans({ loans, setLoans }) {
           {/* button to add new account */}
             <Button
               onClick={() => {
-                // setAccMSodal(true);
+                setApplyModal(true);
               }}
               color="info"
               style={{
