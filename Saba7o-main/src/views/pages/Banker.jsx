@@ -16,6 +16,7 @@ import ClientAccountsCards from "./client/accounts and cards/AccountsCards";
 import ClientLoans from "./client/loans/Loans";
 import PayBills from "./client/bills/PayBills";
 import NotificationsPage from "./client/notifications/NotificationsPage";
+import BankerLeftNav from "components/Navbars/BankerLeftNav";
 
 const initialAccounts = [
   {
@@ -311,7 +312,7 @@ export default function BankerPage() {;
       <div style={{ display: "flex" }}>
         {/* TITLE */}
         {/* a menu occupying the left 1/3 of the screen containing the following:*/}
-        <ClientLeftNav pills={pills} setPills={setPills} />
+        <BankerLeftNav pills={pills} setPills={setPills} />
         {/* a main section occupying the right 2/3 of the screen containing data for each of the sections above */}
         <Col
           style={{ flexGrow: 4, overflowY: "scroll", height: "100vh" }}
