@@ -45,13 +45,21 @@ function BankerLeftNav({ pills, setPills }) {
           </div>
           <Nav className="flex-column" data-tabs="tabs" tabs>
             
+          <ClientLeftNavItem
+              pill="4"
+              pills={pills}
+              setPills={setPills}
+              // icon="now-ui-icons business_money-coins"
+              icon="fa fa-credit-card"
+              text="Credit Card Requests"
+            />
             <ClientLeftNavItem
               pill="5"
               pills={pills}
               setPills={setPills}
               // icon="now-ui-icons business_money-coins"
               icon="fa fa-piggy-bank"
-              text="Loans"
+              text="Loan Requests"
             />
            
             <ClientLeftNavItem

@@ -18,6 +18,7 @@ import PayBills from "./client/bills/PayBills";
 import NotificationsPage from "./client/notifications/NotificationsPage";
 import BankerLeftNav from "components/Navbars/BankerLeftNav";
 import BankerLoans from "./banker/BankerLoans";
+import BankerCreditCards from "./banker/BankerCreditCards";
 
 const initialAccounts = [
   {
@@ -298,7 +299,7 @@ export default function BankerPage() {;
   const tabs = {
     // 1: ClientDashboard(),
     // 2: ClientTransfer({ accounts, setAccounts }),
-    // 4: ClientAccountsCards({ accounts, cards, setAccounts, setCards }),
+    4: BankerCreditCards({  cards, setCards }),
     5: BankerLoans({ loans, setLoans }),
     // 6: PayBills({bills, setBills, accounts, setAccounts, }),
     7: NotificationsPage({notifications, setNotifications})
