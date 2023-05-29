@@ -5251,7 +5251,10 @@ img {
   background-color: #ffb236;
 }
 .card[data-background-color="blue"] {
-  background-color: #2ca8ff;
+  /* background-color: #2ca8ff; */
+  /* background-color: #b6dcf2 */
+  background-color: #0d4076
+  ;
 }
 .card[data-background-color="green"] {
   background-color: #15b60d;

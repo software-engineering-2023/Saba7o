@@ -21,10 +21,14 @@ import ExamplesNavbar from "components/Navbars/Navbar.js";
 import TransparentFooter from "components/Footers/TransparentFooter.js";
 
 // User Login info
-const database = [
+export var database = [
   {
     username: "admin",
     password: "admin",
+  },
+  {
+    username: "banker",
+    password: "banker",
   },
   {
     username: "shady",
@@ -80,11 +84,12 @@ function LoginPage() {
   // Generate JSX code for error message
   const renderErrorMessage = () => {
     return (
-      errorMessages != "" &&
-      <div className="text-warning">
-        <i className="fa fa-exclamation-triangle"></i>
-        <span className="">{"   " + errorMessages}</span>
-      </div>
+      errorMessages != "" && (
+        <div className="text-warning">
+          <i className="fa fa-exclamation-triangle"></i>
+          <span className="">{"   " + errorMessages}</span>
+        </div>
+      )
     );
   };
 
@@ -115,8 +120,18 @@ function LoginPage() {
         setErrorMessages(errors.invalid);
       } else {
         setIsSubmitted(true);
-        window.location.href = "/home";
 
+        // if admin login redirect to admin page
+        if (userData.username === "admin") {
+          window.location.href = "/admin";
+        }
+        // if user login redirect to home page
+        else if (userData.username === "banker") {
+          window.location.href = "/banker";
+        }
+        else{
+          window.location.href = "/client";
+        }
       }
     } else {
       // Username not found
@@ -125,7 +140,7 @@ function LoginPage() {
   };
   return (
     <>
-      <ExamplesNavbar />
+      {/* <ExamplesNavbar /> */}
       <div className="page-header clear-filter" filter-color="blue">
         <div
           className="page-header-image"
@@ -138,11 +153,22 @@ function LoginPage() {
             <Col className="ml-auto mr-auto" md="4">
               <Card className="card-login card-plain">
                 <Form onSubmit={handleSubmit} className="form" method="">
-                  <CardHeader className="text-center">
-                    <div className="logo-container">
+                  <CardHeader
+                    className="text-center"
+                    style={{
+                      display: "flex",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <div
+                      className=""
+                      style={{
+                        width: "65%",
+                      }}
+                    >
                       <img
                         alt="..."
-                        src={require("assets/img/now-logo.png")}
+                        src={require("assets/img/Logo2.png")}
                       ></img>
                     </div>
                   </CardHeader>
@@ -222,7 +248,7 @@ function LoginPage() {
                     >
                       Login
                     </Button>
-                    <div className="pull-left">
+                    <div className="">
                       <h6>
                         <a
                           className="link"
@@ -233,24 +259,13 @@ function LoginPage() {
                         </a>
                       </h6>
                     </div>
-                    <div className="pull-right">
-                      <h6>
-                        <a
-                          className="link"
-                          href="#pablo"
-                          onClick={(e) => e.preventDefault()}
-                        >
-                          Need Help?
-                        </a>
-                      </h6>
-                    </div>
                   </CardFooter>
                 </Form>
               </Card>
             </Col>
           </Container>
         </div>
-        <TransparentFooter />
+        {/* <TransparentFooter /> */}
       </div>
     </>
   );

@@ -15,6 +15,7 @@ import ClientTransfer from "./client/Transfer";
 import ClientAccountsCards from "./client/accounts and cards/AccountsCards";
 import ClientLoans from "./client/loans/Loans";
 import PayBills from "./client/bills/PayBills";
+import NotificationsPage from "./client/notifications/NotificationsPage";
 
 const initialAccounts = [
   {
@@ -203,9 +204,42 @@ const initialBills= [
   },
 ]
 
-export default function ClientPage() {
-  // const [login, setLogin] = useState(true);
-  // const [dropdownOpen, setDropdownOpen] = useState(false);
+const initialNotifications = [
+  {
+    id: crypto.randomUUID(),
+    type: "Reminder",
+    title: "Loan Payment coming up!",
+    description: "You have a loan payment coming up on 10/06/2023",
+    date: "2023-05-29",
+
+  },
+  {
+    id: crypto.randomUUID(),
+    type: "Reminder",
+    title: "Credit Card Payment coming up!",
+    description: "You have a credit card payment coming up on 10/06/2023",
+    date: "2023-05-30",
+
+  },
+  {
+    id: crypto.randomUUID(),
+    type: "Reminder",
+    title: "Electricity Bill Payment coming up!",
+    description: "You have an electricity bill payment coming up on 13/06/2023",
+    date: "2023-05-31",
+  },
+  {
+    id: crypto.randomUUID(),
+    type: "Notification",
+    title: "Technical Issue solved!",
+    description: "This is a notification to inform you that the technical issue you reported has been solved.",
+    date: "2023-06-01",
+  },
+  
+]
+
+
+export default function ClientPage() {;
   const [pills, setPills] = useState(() => {
     return JSON.parse(localStorage.getItem("pills")) || "1";
   });
@@ -242,6 +276,14 @@ export default function ClientPage() {
     return JSON.parse(bills);
   });
 
+  const [notifications, setNotifications] = useState(() => {
+    const notifications = localStorage.getItem("notifications");
+    if (notifications == null) {
+      return initialNotifications;
+    }
+  });
+
+
   useEffect(() => {
     localStorage.setItem("accounts", JSON.stringify(accounts));
     localStorage.setItem("cards", JSON.stringify(cards));
@@ -256,7 +298,8 @@ export default function ClientPage() {
     2: ClientTransfer({ accounts, setAccounts }),
     4: ClientAccountsCards({ accounts, cards, setAccounts, setCards }),
     5: ClientLoans({ loans, setLoans }),
-    6: PayBills({bills, setBills, accounts, setAccounts, })
+    6: PayBills({bills, setBills, accounts, setAccounts, }),
+    7: NotificationsPage({notifications, setNotifications})
   };
 
   function tabContent() {
