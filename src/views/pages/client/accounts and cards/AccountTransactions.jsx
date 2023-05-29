@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { egp } from "./AccountCard.js";
+import { egp } from "./AccountCard";
 
 // reactstrap components
 import {
@@ -15,7 +15,7 @@ import {
 import AccountCard from "./AccountCard";
 import CardCard from "./CardCard";
 import CardField from "./CardField";
-import Transcation from "./Transaction.js";
+import Transcation from "./Transaction";
 
 function AccountTransactions({ account, back }) {
   return (

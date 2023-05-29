@@ -33,10 +33,10 @@ import {
 // css for this page
 import "../../assets/css/now-ui-kit.css";
 
-import ExamplesNavbar from "components/Navbars/Navbar.js";
-import ClientLeftNav from "components/Navbars/ClientLeftNav.js";
-import ClientDashboard from "./client/Dashboard.js";
-import ClientTransfer from "./client/Transfer.js";
+import ExamplesNavbar from "components/Navbars/Navbar";
+import ClientLeftNav from "components/Navbars/ClientLeftNav";
+import ClientDashboard from "./client/Dashboard";
+import ClientTransfer from "./client/Transfer";
 import ClientAccountsCards from "./client/accounts and cards/AccountsCards";
 
 const initialAccounts = [
@@ -193,7 +193,7 @@ export default function ClientPage() {
 
   const tabs = {
     1: ClientDashboard(),
-    2: ClientTransfer(),
+    2: ClientTransfer({accounts, setAccounts}),
     4: ClientAccountsCards({ accounts, cards, setAccounts, setCards}),
   };
 

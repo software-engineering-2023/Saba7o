@@ -52,6 +52,10 @@
   background-color: #212121 !important;
 }
 
+.select-payer > .row {
+  width: 100%
+}
+
 .bootstrap-switch {
   display: inline-block;
   direction: ltr;

@@ -273,6 +273,7 @@ function RedeemPoints({
     // get the form data
     // check that the user chose an account type
     console.log(pointsInput);
+    console.log(accountChosen);
     if (accountChosen === "" || accountChosen === "Choose...") {
       setAlert("Please choose an account to redeem the cashback to");
       return;
@@ -303,7 +304,7 @@ function RedeemPoints({
     // add the cashback to the account
     setAccounts(
       accounts.map((acc) => {
-        if (acc.id === accountChosen.id) {
+        if (acc.id === accountChosen) {
           acc.balance += parseFloat((pointsInput * 0.05).toFixed(2));
           acc.transactions.push({
             id: crypto.randomUUID(),
