@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 // reactstrap components
 import {
@@ -39,186 +39,162 @@ import ClientDashboard from "./client/Dashboard.js";
 import ClientTransfer from "./client/Transfer.js";
 import ClientAccountsCards from "./client/accounts and cards/AccountsCards";
 
+const initialAccounts = [
+  {
+    id: crypto.randomUUID(),
+    accountNumber: "1234567891018",
+    actual: 10000,
+    balance: 10000,
+    type: "Checking Account",
+    transactions: [
+      {
+        id: crypto.randomUUID(),
+        date: "2021-05-01",
+        amount: -1000,
+        description: "Salary",
+      },
+      {
+        id: crypto.randomUUID(),
+        date: "2021-05-01",
+        amount: -3500,
+        description: "Purchase from Amazon",
+      },
+      {
+        id: crypto.randomUUID(),
+        date: "2021-05-01",
+        amount: +5000,
+        description: "Transfer from Shady Hani",
+      },
+    ],
+  },
+  {
+    id: crypto.randomUUID(),
+    accountNumber: "1234567891018",
+    actual: 8000,
+    balance: 8000,
+    type: "Savings Account",
+    transactions: [
+      {
+        id: crypto.randomUUID(),
+        date: "2021-05-01",
+        amount: 1000,
+        description: "Salary",
+      },
+    ],
+  },
+  {
+    id: crypto.randomUUID(),
+    accountNumber: "1234567891018",
+    actual: 2000,
+    balance: 2000,
+    type: "Budget Account",
+    transactions: [
+      {
+        id: crypto.randomUUID(),
+        date: "2021-05-01",
+        amount: 1000,
+        description: "Salary",
+      },
+    ],
+  },
+];
+
+const initialCards = [
+  {
+    id: crypto.randomUUID(),
+    cardNumber: "4141123456789123",
+    name: "Shady Hani",
+    type: "Visa Credit Platinum",
+    balance: 10000,
+    bill: 3967,
+    dueDate: "2024-05-01",
+    points: 99999,
+    transactions: [
+      {
+        id: crypto.randomUUID(),
+        date: "2021-05-01",
+        amount: -1000,
+        description: "Salary",
+      },
+      {
+        id: crypto.randomUUID(),
+        date: "2021-05-01",
+        amount: -3500,
+        description: "Purchase from Amazon",
+      },
+      {
+        id: crypto.randomUUID(),
+        date: "2021-05-01",
+        amount: -5000,
+        description: "Transfer from Shady Hani",
+      },
+    ],
+  },
+  {
+    id: crypto.randomUUID(),
+    cardNumber: "4792121860359321",
+    name: "Hady Shani",
+    type: "Visa Credit Gold",
+    balance: 10000,
+    bill: 1468,
+    dueDate: "2024-05-01",
+    points: 77777,
+
+    transactions: [
+      {
+        id: crypto.randomUUID(),
+        date: "2021-05-01",
+        amount: -1000,
+        description: "Salary",
+      },
+      {
+        id: crypto.randomUUID(),
+        date: "2021-05-01",
+        amount: -3500,
+        description: "Purchase from Amazon",
+      },
+      {
+        id: crypto.randomUUID(),
+        date: "2021-05-01",
+        amount: +5000,
+        description: "Transfer from Hani Shady",
+      },
+    ],
+  },
+  
+];
+
 export default function ClientPage() {
-  const [login, setLogin] = useState(true);
-  const [dropdownOpen, setDropdownOpen] = useState(false);
+  // const [login, setLogin] = useState(true);
+  // const [dropdownOpen, setDropdownOpen] = useState(false);
   const [pills, setPills] = useState("1");
-  const [accounts, setAccounts] = useState([
-    {
-      id: crypto.randomUUID(),
-      accountNumber: "1234567891018",
-      actual: 10000,
-      balance: 10000,
-      type: "Checking Accountttt",
-      transactions: [
-        {
-          id: crypto.randomUUID(),
-          date: "2021-05-01",
-          amount: -1000,
-          description: "Salary",
-        },
-        {
-          id: crypto.randomUUID(),
-          date: "2021-05-01",
-          amount: -3500,
-          description: "Purchase from Amazon",
-        },
-        {
-          id: crypto.randomUUID(),
-          date: "2021-05-01",
-          amount: +5000,
-          description: "Transfer from Shady Hani",
-        },
-      ],
-    },
-    {
-      id: crypto.randomUUID(),
-      accountNumber: "1234567891018",
-      actual: 10000,
-      balance: 10000,
-      type: "Checking Account",
-      transactions: [
-        {
-          id: crypto.randomUUID(),
-          date: "2021-05-01",
-          amount: 1000,
-          description: "Salary",
-        },
-      ],
-    },
-    {
-      id: crypto.randomUUID(),
-      accountNumber: "1234567891018",
-      actual: 10000,
-      balance: 10000,
-      type: "Checking Account",
-      transactions: [
-        {
-          id: crypto.randomUUID(),
-          date: "2021-05-01",
-          amount: 1000,
-          description: "Salary",
-        },
-      ],
-    },
-  ]);
+  const [accounts, setAccounts] = useState(() => {
+    // clear localStorage
+    localStorage.clear();
+    return (
+      JSON.parse(localStorage.getItem("accounts")) || initialAccounts
+    );
+  });
 
-  const [cards, setCards] = useState([
-    {
-      id: crypto.randomUUID(),
-      cardNumber: "4141123456789123",
-      name: "Shady Hani",
-      type: "Visa Credit Platinum",
-      balance: 10000,
-      bill: 3967,
-      dueDate: "2024-05-01",
-      points:99999,
-      transactions: [
-        {
-          id: crypto.randomUUID(),
-          date: "2021-05-01",
-          amount: -1000,
-          description: "Salary",
-        },
-        {
-          id: crypto.randomUUID(),
-          date: "2021-05-01",
-          amount: -3500,
-          description: "Purchase from Amazon",
-        },
-        {
-          id: crypto.randomUUID(),
-          date: "2021-05-01",
-          amount: -5000,
-          description: "Transfer from Shady Hani",
-        },
-      ],
-    },
-    {
-      id: crypto.randomUUID(),
-      cardNumber: "4141123456789123",
-      name: "Shady Hani",
-      type: "Visa Credit Platinum",
-      balance: 10000,
-      bill: 3967,
-      dueDate: "2024-05-01",
-      points:88888,
+  const [cards, setCards] = useState(() => {
+    const cards = localStorage.getItem("cards");
+    if (cards == null) {
+      return initialCards;
+    }
 
-      transactions: [],
-    },
-    {
-      id: crypto.randomUUID(),
-      cardNumber: "4141123456789123",
-      name: "Shady Hani",
-      type: "Visa Credit Platinum",
-      balance: 10000,
-      bill: 3967,
-      dueDate: "2024-05-01",
-      points:77777,
+    return JSON.parse(cards);
+  });
 
-      transactions: [
-        {
-          id: crypto.randomUUID(),
-          date: "2021-05-01",
-          amount: -1000,
-          description: "Salary",
-        },
-        {
-          id: crypto.randomUUID(),
-          date: "2021-05-01",
-          amount: -3500,
-          description: "Purchase from Amazon",
-        },
-        {
-          id: crypto.randomUUID(),
-          date: "2021-05-01",
-          amount: +5000,
-          description: "Transfer from Hani Shady",
-        },
-      ],
-    },
-    {
-      id: crypto.randomUUID(),
-      cardNumber: "4141123456789123",
-      name: "Shady Hani",
-      type: "Visa Credit Platinum",
-      balance: 10000,
-      points:66666,
-      bill: 3967,
-      dueDate: "2024-05-01",
-      transactions: [
-        {
-          id: crypto.randomUUID(),
-          date: "2021-05-01",
-          amount: -1000,
-          description: "Water Bill",
-        },
-        {
-          id: crypto.randomUUID(),
-          date: "2021-05-01",
-          amount: -3500,
-          description: "Purchase from Ebay",
-        },
-        {
-          id: crypto.randomUUID(),
-          date: "2021-05-01",
-          amount: +5000,
-          description: "Transfer from GUC",
-        },
-      ],
-    },
-  ]);
+  useEffect(() => {
+    localStorage.setItem("accounts", JSON.stringify(accounts));
+    localStorage.setItem("cards", JSON.stringify(cards));
+  }, [accounts, cards]);
 
-  // in the AccountsCards tab, the user can click on an account or card. When they do so, we need to change the tab to the corresponding tab containing the relevant transactions
-  // this function is passed to the AccountsCards component and is called when the user clicks on an account or card
-  const changeTab = (tab) => {
-    setPills(tab);
-  };
 
   const tabs = {
     1: ClientDashboard(),
     2: ClientTransfer(),
-    4: ClientAccountsCards({ accounts, cards, changeTab }),
+    4: ClientAccountsCards({ accounts, cards, setAccounts, setCards}),
   };
 
   function tabContent() {
@@ -242,7 +218,10 @@ export default function ClientPage() {
         ></div> */}
 
         {/* a main section occupying the right 2/3 of the screen containing data for each of the sections above */}
-        <Col style={{ flexGrow: 4, overflowY: "scroll" }} className="no-margin no-padding">
+        <Col
+          style={{ flexGrow: 4, overflowY: "scroll", height: "100vh" }}
+          className="no-margin no-padding"
+        >
           {tabContent()}
         </Col>
         {/* </Row> */}

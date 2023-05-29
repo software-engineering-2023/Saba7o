@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 // reactstrap components
-import { Container, Col, Nav, Card, CardHeader } from "reactstrap";
+import { Container, Col, Nav, Card, CardHeader, NavbarBrand } from "reactstrap";
 import ClientLeftNavItem from "./ClientLeftNavItem";
 
 function ClientLeftNav({ pills, setPills }) {
@@ -22,7 +22,6 @@ function ClientLeftNav({ pills, setPills }) {
           flexDirection: "column",
         }}
       >
-
         <div>
           {/* logo */}
           <div
@@ -35,12 +34,22 @@ function ClientLeftNav({ pills, setPills }) {
             }}
           >
             <img
-          
               src={require("assets/img/now-logo.png")}
-              style={{ width: "30%"}}
+              style={{ width: "30%" }}
             />
+
             {/* bank name*/}
-            <h3 style={{ color: "#000000" }}>Bank Name</h3>
+            <div 
+                style={{
+                  textTransform: "uppercase",
+                  fontSize: 16,
+                  fontWeight: 700,
+                  paddingTop: 10,
+                }} >
+              
+                The Morning Bank
+            </div>
+
             {/* horizontal divider */}
             <hr style={{ width: "80%", backgroundColor: "#e8e8e8" }} />
           </div>

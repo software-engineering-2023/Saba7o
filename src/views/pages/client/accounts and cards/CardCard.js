@@ -39,34 +39,33 @@ function CardCard({ card, setSelectedCard, noBtn }) {
           <Row style={{ paddingLeft: noBtn ? 15 : 0 }}>
             {!noBtn && (
               <Button
-                size="sm"
-                color="info"
-                onClick={() => {
-                  setSelectedCard(card);
-                }}
+              size="sm"
+              color="info"
+              onClick={() => {setSelectedCard(card)}}
+              style={{
+                marginRight: 10,
+                marginLeft: 10,
+                marginTop: 4,
+                marginBottom: 4,
+                paddingLeft: 11,
+                paddingRight: 11,
+                paddingTop: 5,
+                paddingBottom: 5,
+                borderRadius: 10,
+              }}
+            >
+              <i
+                className="fa fa-chevron-right fa-2x"
                 style={{
-                  marginRight: 10,
-                  marginLeft: 10,
-                  marginTop: 0,
-                  marginBottom: 0,
-                  padding: 12,
-                  paddingTop: 10,
-                  paddingBottom: 10,
-                  borderRadius: 10,
+                  color: "#23252c",
+                  fontSize: 17,
+                  display: "flex",
+                  alignItems: "center",
+                  paddingLeft: 0,
+                  paddingRight: 0,
                 }}
-              >
-                <i
-                  className="fa fa-chevron-down fa-2x"
-                  style={{
-                    color: "#ffffff",
-                    fontSize: 20,
-                    display: "flex",
-                    alignItems: "center",
-                    paddingLeft: 0,
-                    paddingRight: 0,
-                  }}
-                />
-              </Button>
+              />
+            </Button>
             )}
             <CardField title="Card Number" value={showCardNum ? card.cardNumber : cardNum(card.cardNumber)} />
             {/* eye button to hide and unhide card number */}

@@ -14,6 +14,11 @@ function ClientLeftNavItem({ pill, pills, setPills, icon, text}) {
     <NavLink
       className={"left-nav " + (pills === pill ? "active" : "")}
       onClick={(e) => {
+        if(text == "Logout") {
+          // localStorage.removeItem("token");
+          window.location.href = "/login";
+          return;
+        }
         e.preventDefault();
         setPills(pill);
       }}

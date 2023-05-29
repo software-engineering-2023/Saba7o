@@ -1,17 +1,29 @@
 import { useState } from "react";
 
 // reactstrap components
-import { Card, CardBody, CardTitle, Row, Col, Button } from "reactstrap";
+import {
+  Card,
+  CardBody,
+  CardTitle,
+  Row,
+  Col,
+  Button,
+} from "reactstrap";
 import AccountCard from "./AccountCard";
 import CardCard from "./CardCard";
 import AccountTransactions from "./AccountTransactions";
 import CardTransactions from "./CardTransactions";
+import CardField from "./CardField";
+import AddNewAccount from "./AddNewAccount";
+import AddNewCard from "./AddNewCard";
 
-function ClientAccountsCards({ accounts, cards }) {
+function ClientAccountsCards({ accounts, cards, setAccounts, setCards }) {
   // state for which account is selected
   const [selectedAccount, setSelectedAccount] = useState(null);
   const [selectedCard, setSelectedCard] = useState(null);
 
+  const [accModal, setAccModal] = useState(false);
+  const [cardModal, setCardModal] = useState(false);
 
   function mainPage() {
     return (
@@ -25,23 +37,32 @@ function ClientAccountsCards({ accounts, cards }) {
           {/* button to add new account */}
           <Col>
             <Button
+              onClick={() => {
+                setAccModal(true);
+              }}
               color="info"
               style={{
+                // color: "#000000",
                 float: "right",
                 margin: 5,
+                marginTop: 2,
+
                 padding: 10,
                 paddingTop: 7,
                 paddingBottom: 7,
                 borderRadius: 10,
               }}
             >
-              Add New
+              <b>Add New</b>
             </Button>
           </Col>
         </Row>
         {/* accounts */}
         {accounts.map((account) => (
-          <AccountCard account={account} setSelectedAccount={setSelectedAccount}/>
+          <AccountCard
+            account={account}
+            setSelectedAccount={setSelectedAccount}
+          />
         ))}
 
         {/* 30 px space */}
@@ -57,17 +78,21 @@ function ClientAccountsCards({ accounts, cards }) {
           {/* button to add new account */}
           <Col>
             <Button
+            onClick={() => {
+              setCardModal(true);
+            }}
               color="info"
               style={{
                 float: "right",
                 margin: 5,
+                marginTop: 2,
                 padding: 10,
                 paddingTop: 7,
                 paddingBottom: 7,
                 borderRadius: 10,
               }}
             >
-              Add New
+              <b>Add New</b>
             </Button>
           </Col>
         </Row>
@@ -81,17 +106,31 @@ function ClientAccountsCards({ accounts, cards }) {
 
   return (
     <>
+      <AddNewAccount modal={accModal} setModal={setAccModal} setAccounts={setAccounts} />
+      <AddNewCard modal={cardModal} setModal={setCardModal} setCards={setCards} />
       <CardBody className="text-dark">
         {selectedAccount === null && selectedCard === null ? (
           mainPage()
         ) : selectedAccount !== null ? (
-          <AccountTransactions account={selectedAccount} back={() => {setSelectedAccount(null)}}/>
+          <AccountTransactions
+            account={selectedAccount}
+            back={() => {
+              setSelectedAccount(null);
+            }}
+          />
         ) : (
-          <CardTransactions card={selectedCard} back={() => {setSelectedCard(null)}}/>
+          <CardTransactions
+            card={selectedCard}
+            back={() => {
+              setSelectedCard(null);
+            }}
+          />
         )}
       </CardBody>
     </>
   );
+
+  
 }
 
 export default ClientAccountsCards;
