@@ -3252,9 +3252,11 @@ textarea.form-control:active {
 .badge-info,
 .badge-info[href]:focus,
 .badge-info[href]:hover {
-  border-color: #2ca8ff;
-  background-color: #2ca8ff;
-  color: #ffffff;
+  /* border-color: #2ca8ff;
+  background-color: #2ca8ff; */
+  border-color: #b6dcf2;
+  background-color: #b6dcf2;
+  color: #000000;
 }
 
 .badge-success,
@@ -4534,7 +4536,8 @@ Created using IcoMoon - icomoon.io
 }
 
 .bg-info {
-  background-color: #2ca8ff !important;
+  /* background-color: #2ca8ff !important; */
+  background-color: #0d4076 !important;
 }
 
 .bg-success {

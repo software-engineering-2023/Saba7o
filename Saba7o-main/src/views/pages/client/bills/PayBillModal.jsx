@@ -15,6 +15,8 @@ import {
   CardBody,
   Button,
 } from "reactstrap";
+import CardField from "../accounts and cards/CardField";
+import { egp } from "../accounts and cards/AccountCard";
 // import { min } from "moment";
 
 function PayBillModal({ modal, setModal, accounts, bill, payBill }) {
@@ -28,9 +30,124 @@ function PayBillModal({ modal, setModal, accounts, bill, payBill }) {
   const [accountChosen, setAccountChosen] = useState("");
   const [agreed, setAgreed] = useState(false);
 
+  console.log("bill", bill);
+  // console.log("bill amount", bill.amount);
+
   return (
     <>
-       
+    {alertModal()}
+      <Modal
+        isOpen={modal}
+        toggle={() => setModal(!modal)}
+        size="lg"
+        style={{ marginTop: 140 }}
+      >
+        <Row className="modal-header">
+          <CardTitle
+            tag="h4"
+            className="text-left"
+            style={{
+              margin: 5,
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "space-between",
+            }}
+          >
+            <b>Pay Bill</b>
+          </CardTitle>
+          {billInfo()}
+        </Row>
+        <ModalBody
+          style={{
+            paddingTop: 0,
+          }}
+        >
+          <Form
+            onSubmit={(e) => {
+              {
+                onFormSubmit(e);
+              }
+            }}
+          >
+            <div className="form-row">
+              <FormGroup className="col-md-6">
+                <label htmlFor="inputAccType">Account to Pay with</label>
+                <Input
+                  id="inputAccType"
+                  type="select"
+                  onChange={(e) => {
+                    setAccountChosen(e.target.value);
+                  }}
+                >
+                  <option selected="">Choose...</option>
+                  {accounts.map((acc) => {
+                    return (
+                      <option value={acc.id}>{
+                        // account number, type, balance
+                        `${acc.accountNumber} - ${acc.type} - EGP ${acc.balance}`
+                      }</option>
+                    );
+                  })}
+                </Input>
+              </FormGroup>
+            </div>
+
+            <FormGroup>
+              <FormGroup check>
+                <Label check>
+                  <Input
+                    type="checkbox"
+                    value={agreed}
+                    onChange={(e) => {
+                      setAgreed(e.target.checked);
+                    }}
+                    valid={agreed ? "true" : "false"}
+                  ></Input>
+                  I confirm the payment of this bill.
+                  <span className="form-check-sign">
+                    <span className="check"></span>
+                  </span>
+                </Label>
+              </FormGroup>
+            </FormGroup>
+
+            {/* error text to the left */}
+            <Row
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+
+                paddingLeft: 15,
+                paddingRight: 15,
+                paddingBottom: 0,
+                marginBottom: 0,
+              }}
+            >
+              <div className="text-left text-danger">
+                {alert === "" ? null : (
+                  <i className="now-ui-icons ui-1_bell-53"></i>
+                )}
+                {"     " + alert}
+              </div>
+              {/* add and cancel buttons on the right */}
+              <div className="text-right">
+                <Button
+                  color="secondary"
+                  onClick={() => {
+                    setModal(!modal);
+                  }}
+                >
+                  <b>Cancel</b>
+                </Button>
+                <Button color="info" type="submit">
+                  <b>Pay Bill</b>
+                </Button>
+              </div>
+            </Row>
+          </Form>
+        </ModalBody>
+      </Modal>
     </>
   );
 
@@ -40,7 +157,7 @@ function PayBillModal({ modal, setModal, accounts, bill, payBill }) {
     // check that the user chose an account type
     console.log(accountChosen);
     if (accountChosen === "" || accountChosen === "Choose...") {
-      setAlert("Please choose an account to redeem the cashback to");
+      setAlert("Please choose an account to the bill with.");
       return;
     }
 
@@ -49,6 +166,15 @@ function PayBillModal({ modal, setModal, accounts, bill, payBill }) {
       setAlert("Please agree to the terms");
       return;
     }
+
+    // check if the user has enough balance
+    if (bill.amount > accounts.find((acc) => acc.id === accountChosen).balance) {
+      setAlert("You don't have enough balance");
+      return;
+    }
+
+    // pay the bill
+    payBill(accountChosen, bill);
 
     // // check if the user has enough points
     // if (pointsInput > points) {
@@ -153,10 +279,77 @@ function PayBillModal({ modal, setModal, accounts, bill, payBill }) {
     return year + "-" + month + "-" + day;
   }
 
-  // function to show only the first 4 and last 3 digits of the card number
-  function formatPts(num) {
-    //   format the number to have commas
-    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
+  function billInfo() {
+    return (
+      <Card
+        style={{
+          fontSize: 13,
+          borderRadius: 10,
+          paddingLeft: 10,
+          paddingRight: 10,
+          marginBottom: 0,
+          width: "auto",
+          background: "#1e1f26",
+          color: "white",
+        }}
+      >
+        <CardBody>
+          <Row
+            style={{
+              justifyContent: "space-between",
+            }}
+          >
+            <div>
+              <CardField
+                title={"Bill Number"}
+                value={bill.billNumber}
+                alignLeft
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                }}
+                titleColor="white"
+              />
+            </div>
+
+            <div style={{ width: 20 }}></div>
+
+            <div>
+              <CardField
+                title={"Type"}
+                value={bill.type}
+                alignLeft
+                style={{ display: "flex", flexDirection: "column" }}
+              />
+            </div>
+
+            <div style={{ width: 20 }}></div>
+
+            <div>
+              <CardField
+                title={"Amount"}
+                value={egp.format(bill.amount)}
+                alignLeft
+                style={{ display: "flex", flexDirection: "column",
+                color: "#b5f2e5",
+              }}
+              titleColor={"white"}
+              />
+            </div>
+
+            <div style={{ width: 20 }}></div>
+
+            <CardField
+              title={"Due Date"}
+              value={bill.dueDate}
+              alignLeft
+              style={{ display: "flex", flexDirection: "column" }}
+            />
+          </Row>
+        </CardBody>
+      </Card>
+    );
   }
 }
 

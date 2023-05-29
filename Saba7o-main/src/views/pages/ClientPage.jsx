@@ -2,32 +2,7 @@ import { useState, useEffect } from "react";
 
 // reactstrap components
 import {
-  Container,
   Col,
-  Row,
-  NavItem,
-  NavLink,
-  Nav,
-  Card,
-  CardHeader,
-  CardBody,
-  CardFooter,
-  CardTitle,
-  Button,
-  Table,
-  Label,
-  Input,
-  UncontrolledTooltip,
-  Form,
-  TabContent,
-  TabPane,
-  NavbarBrand,
-  UncontrolledCollapse,
-  Navbar,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem,
-  Dropdown,
 } from "reactstrap";
 
 // css for this page
@@ -281,7 +256,7 @@ export default function ClientPage() {
     2: ClientTransfer({ accounts, setAccounts }),
     4: ClientAccountsCards({ accounts, cards, setAccounts, setCards }),
     5: ClientLoans({ loans, setLoans }),
-    6: PayBills({bills, setBills})
+    6: PayBills({bills, setBills, accounts, setAccounts, })
   };
 
   function tabContent() {

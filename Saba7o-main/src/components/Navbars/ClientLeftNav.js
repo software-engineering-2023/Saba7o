@@ -44,26 +44,26 @@ function ClientLeftNav({ pills, setPills }) {
             <hr style={{ width: "80%", backgroundColor: "#e8e8e8" }} />
           </div>
           <Nav className="flex-column" data-tabs="tabs" tabs>
-            <ClientLeftNavItem
+            {/* <ClientLeftNavItem
               pill="1"
               pills={pills}
               setPills={setPills}
               icon="fa fa-home"
               text="Dashboard"
-            />
+            /> */}
+              <ClientLeftNavItem
+                pill="4"
+                pills={pills}
+                setPills={setPills}
+                icon="fa fa-credit-card"
+                text="Accounts and Cards"
+              />
             <ClientLeftNavItem
               pill="2"
               pills={pills}
               setPills={setPills}
               icon="fa fa-reply"
               text="Transfer"
-            />
-            <ClientLeftNavItem
-              pill="4"
-              pills={pills}
-              setPills={setPills}
-              icon="fa fa-credit-card"
-              text="Accounts and Cards"
             />
             <ClientLeftNavItem
               pill="5"
